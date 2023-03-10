@@ -69,10 +69,62 @@ public class DaoProduto {
 		return lista;
 	}
 	
+	public void delete( Produto produto ) {
+		String sql = "DELETE FROM PRODUTOS WHERE CODIGO=?";
+		try {
+			PreparedStatement pstmt = connection.prepareStatement(sql);
+			pstmt.setInt(1, produto.getCodigo());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void update( Produto produto ) {
+		String sql = "UPDATE PRODUTOS SET DESCRICAO=?, "
+				+ "QUANTIDADE=?, PRECO=?, DATACOMPRA=? WHERE CODIGO=?";
+		try {
+			PreparedStatement pstmt = connection.prepareStatement(sql);
+			pstmt.setString(1, produto.getDescricao());
+			pstmt.setInt(2, produto.getQuantidade());
+			pstmt.setDouble(3, produto.getPreco());
+			pstmt.setDate(4, 
+					new java.sql.Date(produto.getDataCompra().getTime()));
+			pstmt.setInt(5, produto.getCodigo());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Produto buscarPeloCodigo( int codigo ) {
+		String sql = "SELECT * FROM PRODUTOS WHERE CODIGO=?";
+		try {
+			PreparedStatement pstmt = connection.prepareStatement(sql);
+			pstmt.setInt(1, codigo);
+			ResultSet rs = pstmt.executeQuery();
+			if( rs.next() ) {
+				return new Produto(rs.getInt(1),
+								   rs.getString(2),
+								   rs.getInt(3),
+								   rs.getDouble(4),
+								   rs.getDate(5));
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public static void main(String[] args) {
 		DaoProduto dao = new DaoProduto();
-		//Produto produto = new Produto(100,"teste100",100,100,new Date());
-		//dao.inserir(produto);
-		System.out.println(dao.getLista());
+		//Produto produto = new Produto(8,"teste8",8,8,new Date());
+	    //dao.update(produto);
+	    //System.out.println(dao.getLista());
+		System.out.println(dao.buscarPeloCodigo(3));
 	}
 }
