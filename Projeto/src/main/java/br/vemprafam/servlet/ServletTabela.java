@@ -64,6 +64,7 @@ public class ServletTabela extends HttpServlet {
 					+ "</tr>");
 		}
 		out.println("</table>\r\n"
+				+ "<a href=\"/Projeto\">voltar</a>"
 				+ "</body>\r\n"
 				+ "</html>");
 	}
