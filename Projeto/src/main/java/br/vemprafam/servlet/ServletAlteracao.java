@@ -16,16 +16,16 @@ import br.vemprafam.dao.DaoProduto;
 import br.vemprafam.pojo.Produto;
 
 /**
- * Servlet implementation class ServletCadastro
+ * Servlet implementation class ServletAlteracao
  */
-@WebServlet("/cadastrar")
-public class ServletCadastro extends HttpServlet {
+@WebServlet("/alterar")
+public class ServletAlteracao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCadastro() {
+    public ServletAlteracao() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +46,7 @@ public class ServletCadastro extends HttpServlet {
 			dataCompra = new Date();
 		}
 		DaoProduto dao = new DaoProduto();
-		dao.inserir(new Produto(codigo,descricao,quantidade,
+		dao.update(new Produto(codigo,descricao,quantidade,
 				preco,dataCompra));
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>\r\n"
@@ -56,7 +56,7 @@ public class ServletCadastro extends HttpServlet {
 				+ "<title>Resultado</title>\r\n"
 				+ "</head>\r\n"
 				+ "<body>\r\n"
-				+ "Inserido<br/>\r\n"
+				+ "Alterado<br/>\r\n"
 				+ "<a href='/Projeto'>voltar</a>"
 				+ "</body>\r\n"
 				+ "</html>");

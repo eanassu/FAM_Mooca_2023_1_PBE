@@ -2,9 +2,6 @@ package br.vemprafam.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,16 +13,16 @@ import br.vemprafam.dao.DaoProduto;
 import br.vemprafam.pojo.Produto;
 
 /**
- * Servlet implementation class ServletCadastro
+ * Servlet implementation class ServletExclusao
  */
-@WebServlet("/cadastrar")
-public class ServletCadastro extends HttpServlet {
+@WebServlet("/excluir")
+public class ServletExclusao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCadastro() {
+    public ServletExclusao() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,19 +32,9 @@ public class ServletCadastro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int codigo = Integer.parseInt(request.getParameter("codigo"));
-		String descricao = request.getParameter("descricao");
-		int quantidade = Integer.parseInt(request.getParameter("quantidade"));
-		double preco = Double.parseDouble(request.getParameter("preco"));
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		Date dataCompra;
-		try {
-			dataCompra = format.parse(request.getParameter("dataCompra"));
-		} catch (ParseException e) {
-			dataCompra = new Date();
-		}
 		DaoProduto dao = new DaoProduto();
-		dao.inserir(new Produto(codigo,descricao,quantidade,
-				preco,dataCompra));
+		Produto p = new Produto(codigo,"",0,0,null);
+		dao.delete(p);
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
@@ -56,10 +43,11 @@ public class ServletCadastro extends HttpServlet {
 				+ "<title>Resultado</title>\r\n"
 				+ "</head>\r\n"
 				+ "<body>\r\n"
-				+ "Inserido<br/>\r\n"
+				+ "Excluído<br/>\r\n"
 				+ "<a href='/Projeto'>voltar</a>"
 				+ "</body>\r\n"
 				+ "</html>");
+	
 	}
 
 	/**
