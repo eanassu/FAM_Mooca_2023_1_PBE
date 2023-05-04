@@ -10,7 +10,7 @@
 <title>Produto</title>
 </head>
 <body>
-<form action="alterar">
+<form action="controller">
 <%
 int codigo = Integer.parseInt(request.getParameter("codigo"));
 Produto p = new DaoProduto().buscarPeloCodigo(codigo);
@@ -22,6 +22,7 @@ quantidade:<input type="text" name="quantidade" value="<%=p.getQuantidade()%>"/>
 preço:<input type="text" name="preco" value="<%=p.getPreco()%>"/><br/>
 data da compra:<input type="text" name="dataCompra" 
                 value="<%=dateFormat.format(p.getDataCompra())%>"/><br/>
+<input type="hidden" name="op" value="Alteracao"/>
 <input type="submit" value="enviar"/><br/>
 </form>
 <a href="/Projeto">voltar</a>
